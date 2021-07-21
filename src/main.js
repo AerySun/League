@@ -1,8 +1,8 @@
+require('dotenv').config()
 const { prompt } = require('enquirer')
 const { readFile } = require('fs/promises')
 const fetch = require('node-fetch')
 
-const API_KEY = 'RGAPI-11b9e6ec-ea77-4b99-9e6d-7b78674518ea'
 const BASE_URL = 'https://euw1.api.riotgames.com'
 const GET_SUMMONER_BY_NAME = 'lol/summoner/v4/summoners/by-name'
 const GET_LEAGUE_BY_SUMMONER = 'lol/league/v4/entries/by-summoner'
@@ -55,11 +55,16 @@ async function sendRequest(path, param){
     const config = {
         method: 'GET',
         headers: {
-            'X-Riot-Token': API_KEY
+            'X-Riot-Token': process.env.API_KEY
         }
     }
     const response = await fetch(`${BASE_URL}/${path}/${encodeURIComponent(param)}`, config)
-    return await response.json()
+    const json = await response.json()
+    if ('status' in json){
+        console.log(json)
+        process.exit(1)
+    }
+    return json
 }
 
 main()

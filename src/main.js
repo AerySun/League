@@ -6,7 +6,7 @@ const fetch = require('node-fetch')
 const BASE_URL = 'https://euw1.api.riotgames.com'
 const GET_SUMMONER_BY_NAME = 'lol/summoner/v4/summoners/by-name'
 const GET_LEAGUE_BY_SUMMONER = 'lol/league/v4/entries/by-summoner'
-const GET_MASTERY_BY_SUMMONER = '/lol/champion-mastery/v4/champion-masteries/by-summoner'
+const GET_MASTERY_BY_SUMMONER = 'lol/champion-mastery/v4/champion-masteries/by-summoner'
 
 async function getChampions(){
     const championsList = JSON.parse(await readFile('./src/champions.json'))
@@ -19,6 +19,7 @@ async function getChampions(){
 }
 
 async function main() {
+    console.log(process.env.API_KEY)
     const response = await prompt({
         type: 'input',
         name: 'summonername',

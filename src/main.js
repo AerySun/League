@@ -19,7 +19,6 @@ async function getChampions(){
 }
 
 async function main() {
-    console.log(process.env.API_KEY)
     const response = await prompt({
         type: 'input',
         name: 'summonername',
